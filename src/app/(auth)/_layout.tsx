@@ -1,2 +1,19 @@
-import { Stack } from 'expo-router';
-export default function AuthLayout() { return <Stack><Stack.Screen name="login" options={{ title: 'Sign in' }} /><Stack.Screen name="register" options={{ title: 'Create account' }} /><Stack.Screen name="forgot-password" options={{ title: 'Reset password' }} /></Stack>; }
+import { Stack } from "expo-router";
+
+/** Configures the shared transparent stack header for authentication routes. */
+export default function AuthLayout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerBackTitle: "Back",
+        headerShadowVisible: false,
+        headerTitle: "",
+        headerTransparent: true,
+      }}
+    >
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+      <Stack.Screen name="forgot-password" />
+    </Stack>
+  );
+}
