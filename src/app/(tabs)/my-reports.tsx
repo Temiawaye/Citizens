@@ -14,6 +14,7 @@ import { incidentKeys } from "@/lib/incidents";
 import { queryClient } from "@/lib/query-client";
 import { deleteIncidentWithImages } from "@/lib/submission";
 import type { Incident } from "@/types/database";
+import { COLORS } from "@/lib/theme";
 
 /** Renders an accessible icon action for an owned report card. */
 function ReportCardAction({
@@ -27,14 +28,14 @@ function ReportCardAction({
   onPress: () => void;
   destructive?: boolean;
 }) {
-  const foregroundColor = destructive ? "#b91c1c" : "#1d4ed8";
+  const foregroundColor = destructive ? COLORS.danger : COLORS.primary;
 
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={onPress}
-      className={`min-h-12 flex-1 flex-row items-center justify-center gap-2 rounded-control ${destructive ? "bg-danger-50" : "bg-brand-50"}`}
+      className={`min-h-12 flex-1 flex-row items-center justify-center gap-2 rounded-control active:opacity-70 ${destructive ? "bg-danger-50" : "bg-brand-50"}`}
     >
       <Ionicons name={icon} color={foregroundColor} size={20} />
       <Text
@@ -89,7 +90,7 @@ export default function MyReportsScreen() {
     );
   return (
     <FlatList
-      className="bg-slate-50"
+      className="bg-canvas"
       contentContainerClassName="grow p-4"
       data={reports.items}
       keyExtractor={(item) => item.id}
@@ -121,6 +122,8 @@ export default function MyReportsScreen() {
       ItemSeparatorComponent={() => null}
       refreshControl={
         <RefreshControl
+          colors={[COLORS.primary]}
+          tintColor={COLORS.primary}
           refreshing={reports.isRefetching}
           onRefresh={() => void reports.refetch()}
         />

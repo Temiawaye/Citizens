@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { ComponentProps } from "react";
 import type { TextInputProps } from "react-native";
 import { Pressable, Text, TextInput, View } from "react-native";
+import { COLORS } from "@/lib/theme";
 
 type FormFieldProps = TextInputProps & {
   label: string;
@@ -19,9 +20,12 @@ export function FormField({
   appearance = "default",
   icon,
   secureTextEntry,
+  onFocus,
+  onBlur,
   ...props
 }: FormFieldProps) {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [focused, setFocused] = useState(false);
   const isAuth = appearance === "auth";
   const defaultContainerClasses = [
     "min-h-12 rounded-control bg-surface px-4",
@@ -29,11 +33,13 @@ export function FormField({
   ].join(" ");
   const containerClasses = [
     "flex-row items-center border",
-    isAuth ? "min-h-16 rounded-2xl bg-slate-50 px-4" : defaultContainerClasses,
+    isAuth ? "min-h-16 rounded-2xl bg-surface px-4" : defaultContainerClasses,
     error
       ? "border-danger-600"
+      : focused
+        ? "border-brand-600"
       : isAuth
-        ? "border-transparent"
+        ? "border-outline"
         : "border-outline",
   ].join(" ");
   const inputClasses = [
@@ -45,7 +51,7 @@ export function FormField({
   return (
     <View className="gap-2">
       <Text
-        className={`${isAuth ? "text-base font-medium text-slate-500" : "text-sm font-semibold text-muted"}`}
+        className={`${isAuth ? "text-base font-medium text-muted" : "text-sm font-semibold text-muted"}`}
       >
         {label}
       </Text>
@@ -54,7 +60,7 @@ export function FormField({
           <Ionicons
             accessibilityElementsHidden
             name={icon}
-            color="#64748b"
+            color={COLORS.supporting}
             size={22}
           />
         ) : null}
@@ -64,8 +70,17 @@ export function FormField({
           allowFontScaling
           multiline={multiline}
           secureTextEntry={secureTextEntry && !passwordVisible}
-          placeholderTextColor="#7c8491"
+          keyboardAppearance="light"
+          placeholderTextColor={COLORS.supporting}
           className={inputClasses}
+          onFocus={(event) => {
+            setFocused(true);
+            onFocus?.(event);
+          }}
+          onBlur={(event) => {
+            setFocused(false);
+            onBlur?.(event);
+          }}
           {...props}
         />
         {secureTextEntry ? (
@@ -80,7 +95,7 @@ export function FormField({
           >
             <Ionicons
               name={passwordVisible ? "eye-off-outline" : "eye-outline"}
-              color="#64748b"
+              color={COLORS.supporting}
               size={23}
             />
           </Pressable>

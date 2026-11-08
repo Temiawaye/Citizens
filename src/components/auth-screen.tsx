@@ -20,7 +20,7 @@ export function AuthScreen({
   footer?: ReactNode;
 }>) {
   return (
-    <SafeAreaView edges={["bottom"]} className="flex-1 bg-white">
+    <SafeAreaView edges={["bottom"]} className="flex-1 bg-canvas">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         className="flex-1"
@@ -35,7 +35,7 @@ export function AuthScreen({
               <View className="h-1 w-12 rounded-full bg-brand-600" />
               <Text
                 accessibilityRole="header"
-                className="text-center text-4xl font-bold tracking-tight text-ink"
+                className="text-center text-4xl font-bold tracking-tight text-heading"
               >
                 {title}
               </Text>

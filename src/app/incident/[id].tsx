@@ -13,6 +13,7 @@ import MapView, { Marker } from "react-native-maps";
 import { ErrorState, LoadingState } from "@/components/screen-state";
 import { useIncident } from "@/hooks/use-incidents";
 import { CATEGORY_COLORS } from "@/lib/constants";
+import { COLORS } from "@/lib/theme";
 
 /** Loads and renders a complete incident with imagery, location, and map actions. */
 export default function IncidentDetailScreen() {
@@ -28,11 +29,11 @@ export default function IncidentDetailScreen() {
     );
   if (!incident.data)
     return (
-      <View className="flex-1 items-center justify-center gap-2 bg-slate-50 p-8">
-        <Text className="text-xl font-bold text-slate-950">
+      <View className="flex-1 items-center justify-center gap-2 bg-canvas p-8">
+        <Text className="text-xl font-bold text-heading">
           Report unavailable
         </Text>
-        <Text className="text-center text-slate-600">
+        <Text className="text-center text-muted">
           It may have been deleted by its reporter.
         </Text>
       </View>
@@ -48,7 +49,7 @@ export default function IncidentDetailScreen() {
     if (url) void Linking.openURL(url);
   };
   return (
-    <ScrollView className="bg-slate-50" contentContainerClassName="pb-12">
+    <ScrollView className="bg-canvas" contentContainerClassName="pb-12">
       {item.image_urls.length ? (
         <FlatList
           horizontal
@@ -62,17 +63,17 @@ export default function IncidentDetailScreen() {
         />
       ) : null}
       <View className="gap-4 p-5">
-        <View
-          className={`self-start rounded-full px-3 py-2 ${CATEGORY_COLORS[item.category]}`}
+        <Text
+          className={`self-start rounded-full px-3 py-2 font-semibold ${CATEGORY_COLORS[item.category]}`}
         >
-          <Text className="font-semibold">{item.category}</Text>
-        </View>
-        <Text className="text-3xl font-bold text-slate-950">{item.title}</Text>
-        <Text className="text-sm text-slate-500">
+          {item.category}
+        </Text>
+        <Text className="text-3xl font-bold text-heading">{item.title}</Text>
+        <Text className="text-sm text-muted">
           Reported by {item.reporter_name} ·{" "}
           {new Date(item.created_at).toLocaleString()}
         </Text>
-        <Text className="text-base leading-6 text-slate-800">
+        <Text className="text-base leading-6 text-ink">
           {item.description}
         </Text>
         <MapView
@@ -86,16 +87,18 @@ export default function IncidentDetailScreen() {
         >
           <Marker
             coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+            pinColor={COLORS.location}
             title={item.title}
           />
         </MapView>
-        <Text className="text-slate-600">
+        <Text className="text-muted">
           {item.address || `${item.latitude}, ${item.longitude}`}
         </Text>
         <Pressable
           accessibilityRole="button"
           onPress={openMaps}
-          className="min-h-12 items-center justify-center rounded-xl bg-brand-600"
+          accessibilityLabel="Open incident location in Maps"
+          className="min-h-12 items-center justify-center rounded-xl bg-location active:opacity-75"
         >
           <Text className="font-semibold text-white">Open in Maps</Text>
         </Pressable>

@@ -1,7 +1,13 @@
 import "@/global.css";
 import "@/lib/nativewind";
 import * as Notifications from "expo-notifications";
-import { Stack, router, useRootNavigationState } from "expo-router";
+import {
+  DefaultTheme,
+  Stack,
+  ThemeProvider,
+  router,
+  useRootNavigationState,
+} from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
@@ -13,6 +19,20 @@ import { queryClient } from "@/lib/query-client";
 import { useAuthStore } from "@/store/auth-store";
 import { registerPushToken } from "@/lib/notifications";
 import { supabase } from "@/lib/supabase";
+import { COLORS } from "@/lib/theme";
+
+const LIGHT_THEME = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: COLORS.primary,
+    background: COLORS.background,
+    card: COLORS.surface,
+    text: COLORS.text,
+    border: COLORS.border,
+    notification: COLORS.primary,
+  },
+};
 
 void SplashScreen.preventAutoHideAsync();
 Notifications.setNotificationHandler({
@@ -80,35 +100,38 @@ function AppNavigator() {
   return (
     <>
       <StatusBar style="dark" />
-      <Stack
-        screenOptions={{
-          headerBackTitle: "Back",
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: "#ffffff" },
-          headerTintColor: "#0f172a",
-          headerTitleAlign: "left",
-          headerTitleStyle: {
-            color: "#0f172a",
-            fontSize: 22,
-            fontWeight: "700",
-          },
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(auth)"
-          options={{ headerShown: false, presentation: "modal" }}
-        />
-        <Stack.Screen name="incident/[id]" options={{ title: "Incident" }} />
-        <Stack.Screen
-          name="reset-password"
-          options={{
+      <ThemeProvider value={LIGHT_THEME}>
+        <Stack
+          screenOptions={{
+            headerBackTitle: "Back",
             headerShadowVisible: false,
-            headerTitle: "",
-            headerTransparent: true,
+            contentStyle: { backgroundColor: COLORS.background },
+            headerStyle: { backgroundColor: COLORS.surface },
+            headerTintColor: COLORS.heading,
+            headerTitleAlign: "left",
+            headerTitleStyle: {
+              color: COLORS.heading,
+              fontSize: 22,
+              fontWeight: "700",
+            },
           }}
-        />
-      </Stack>
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(auth)"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+          <Stack.Screen name="incident/[id]" options={{ title: "Incident" }} />
+          <Stack.Screen
+            name="reset-password"
+            options={{
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerTransparent: true,
+            }}
+          />
+        </Stack>
+      </ThemeProvider>
     </>
   );
 }

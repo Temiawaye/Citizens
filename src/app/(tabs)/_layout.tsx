@@ -1,18 +1,46 @@
 import { Ionicons } from "@expo/vector-icons";
+import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { Tabs } from "expo-router";
-import { Platform, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { COLORS } from "@/lib/theme";
 
-const ACTIVE_COLOR = "#f8fafc";
-const INACTIVE_COLOR = "#7c8491";
-const NAV_BACKGROUND = "#191b20";
+const ACTIVE_COLOR = COLORS.bottomNavigationActive;
+const INACTIVE_COLOR = COLORS.bottomNavigationInactive;
+const NAV_BACKGROUND = COLORS.bottomNavigation;
+
+/** Adds native liquid glass when available and a translucent fallback elsewhere. */
+function BottomTabBackground() {
+  if (Platform.OS === "ios" && isGlassEffectAPIAvailable()) {
+    return (
+      <GlassView
+        colorScheme="dark"
+        glassEffectStyle="regular"
+        tintColor={COLORS.bottomNavigation}
+        style={[StyleSheet.absoluteFill, { borderRadius: 40 }]}
+      />
+    );
+  }
+
+  return (
+    <View
+      style={[
+        StyleSheet.absoluteFill,
+        {
+          backgroundColor: COLORS.bottomNavigationGlass,
+          borderRadius: 40,
+        },
+      ]}
+    />
+  );
+}
 
 /** Renders a compact page title while retaining the platform status-bar safe area. */
 function CompactPageHeader({ title }: { title: string }) {
   return (
     <SafeAreaView edges={["top"]} className="bg-white">
       <View className="h-14 justify-center px-5">
-        <Text accessibilityRole="header" className="text-2xl font-bold text-ink">
+        <Text accessibilityRole="header" className="text-2xl font-bold text-heading">
           {title}
         </Text>
       </View>
@@ -45,12 +73,12 @@ function ReportTabIcon({ focused }: { focused: boolean }) {
     <View
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
-      className={`h-16 w-16 items-center justify-center rounded-full border-4 ${focused ? "border-brand-500 bg-white" : "border-[#191b20] bg-white"}`}
+      className={`h-16 w-16 items-center justify-center rounded-full border-4 bg-white ${focused ? "border-brand-600" : "border-bottom-nav"}`}
       style={{ transform: [{ translateY: -19 }] }}
     >
       <Ionicons
         name={focused ? "megaphone" : "megaphone-outline"}
-        color={focused ? "#1d4ed8" : NAV_BACKGROUND}
+        color={focused ? COLORS.primary : COLORS.supporting}
         size={27}
       />
     </View>
@@ -68,18 +96,26 @@ export default function TabsLayout() {
         tabBarActiveTintColor: ACTIVE_COLOR,
         tabBarInactiveTintColor: INACTIVE_COLOR,
         tabBarHideOnKeyboard: true,
+        tabBarBackground: () => <BottomTabBackground />,
         tabBarLabelStyle: { fontSize: 12, fontWeight: "600", marginTop: 2 },
         tabBarItemStyle: { paddingTop: 9 },
         tabBarStyle: {
-          backgroundColor: NAV_BACKGROUND,
-          borderTopColor: "transparent",
-          borderTopLeftRadius: 24,
-          borderTopRightRadius: 24,
+          backgroundColor: "transparent",
+          // borderTopColor: "transparent",
+
           borderTopWidth: 0,
           height: Platform.OS === "ios" ? 88 : 72,
           paddingBottom: Platform.OS === "ios" ? 22 : 8,
           paddingTop: 4,
           marginBottom: 54,
+          borderRadius: 40,
+          borderColor: COLORS.bottomNavigationEdge,
+          borderWidth: 1,
+          shadowColor: NAV_BACKGROUND,
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.24,
+          shadowRadius: 18,
+          elevation: 12,
         },
       }}
     >

@@ -1,0 +1,20 @@
+/** Semantic colours used by native props that cannot consume NativeWind classes. */
+export const COLORS = {
+  primary: "#6D28D9",
+  primaryPressed: "#5B21B6",
+  selected: "#F0EAFE",
+  heading: "#16324F",
+  location: "#087F8C",
+  background: "#F5F7FA",
+  surface: "#FFFFFF",
+  text: "#172B4D",
+  supporting: "#526277",
+  border: "#DCE3EB",
+  success: "#15803D",
+  danger: "#B91C1C",
+  bottomNavigation: "#191B20",
+  bottomNavigationGlass: "rgba(25, 27, 32, 0.88)",
+  bottomNavigationEdge: "rgba(255, 255, 255, 0.14)",
+  bottomNavigationActive: "#F8FAFC",
+  bottomNavigationInactive: "#A8B0BC",
+} as const;

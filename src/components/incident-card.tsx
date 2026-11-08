@@ -27,7 +27,7 @@ export function IncidentCard({
   actions?: ReactNode;
 }) {
   return (
-    <View className="mb-4 overflow-hidden rounded-card border border-slate-200 bg-surface">
+    <View className="mb-4 overflow-hidden rounded-card border border-outline bg-surface">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`${incident.category}: ${incident.title}`}
@@ -42,8 +42,8 @@ export function IncidentCard({
             accessibilityLabel={`Photo for ${incident.title}`}
           />
         ) : (
-          <View className="h-24 items-center justify-center bg-slate-100">
-            <Text className="text-slate-500">No photo</Text>
+          <View className="h-24 items-center justify-center bg-canvas">
+            <Text className="text-muted">No photo</Text>
           </View>
         )}
         <View className="gap-2 p-4">
@@ -60,7 +60,7 @@ export function IncidentCard({
           <Text
             accessibilityRole="header"
             numberOfLines={2}
-            className="text-lg font-bold text-ink"
+            className="text-lg font-bold text-heading"
           >
             {incident.title}
           </Text>
@@ -71,7 +71,7 @@ export function IncidentCard({
         </View>
       </Pressable>
       {actions ? (
-        <View className="flex-row gap-2 border-t border-slate-100 p-3">
+        <View className="flex-row gap-2 border-t border-outline p-3">
           {actions}
         </View>
       ) : null}

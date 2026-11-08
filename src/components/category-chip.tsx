@@ -17,9 +17,9 @@ export function CategoryChip({
       accessibilityLabel={`Filter by ${label}`}
       accessibilityState={{ selected }}
       onPress={onPress}
-      className={`mr-2 min-h-9 justify-center rounded-full border px-3 ${selected ? "border-brand-600 bg-brand-600" : "border-outline bg-surface"}`}
+      className={`mr-2 min-h-11 justify-center rounded-full border px-4 active:opacity-70 ${selected ? "border-brand-600 bg-brand-50" : "border-outline bg-surface"}`}
     >
-      <Text className={`font-medium ${selected ? "text-white" : "text-muted"}`}>
+      <Text className={`font-semibold ${selected ? "text-brand-600" : "text-muted"}`}>
         {label}
       </Text>
     </Pressable>

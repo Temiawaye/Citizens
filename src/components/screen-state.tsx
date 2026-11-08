@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text, View } from "react-native";
 
 import { Button } from "@/components/ui/button";
+import { COLORS } from "@/lib/theme";
 
 /** Renders an accessible full-screen loading indicator with an optional label. */
 export function LoadingState({ label = "Loading…" }: { label?: string }) {
@@ -10,7 +11,7 @@ export function LoadingState({ label = "Loading…" }: { label?: string }) {
       accessibilityLabel={label}
       className="flex-1 items-center justify-center gap-3 bg-canvas p-8"
     >
-      <ActivityIndicator size="large" color="#1d4ed8" />
+      <ActivityIndicator size="large" color={COLORS.primary} />
       <Text className="text-center text-muted">{label}</Text>
     </View>
   );
@@ -28,7 +29,7 @@ export function EmptyState({
     <View className="flex-1 items-center justify-center gap-2 bg-canvas p-8">
       <Text
         accessibilityRole="header"
-        className="text-center text-xl font-bold text-ink"
+        className="text-center text-xl font-bold text-heading"
       >
         {title}
       </Text>

@@ -26,7 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: "com.citizens.reporting",
     adaptiveIcon: {
-      backgroundColor: "#E6F4FE",
+      backgroundColor: "#F5F7FA",
       foregroundImage: "./assets/images/android-icon-foreground.png",
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
@@ -60,12 +60,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     [
       "expo-notifications",
-      { color: "#2563EB", defaultChannel: "new-incidents" },
+      { color: "#6D28D9", defaultChannel: "new-incidents" },
     ],
     [
       "expo-splash-screen",
       {
-        backgroundColor: "#2563EB",
+        backgroundColor: "#F5F7FA",
         image: "./assets/images/splash-icon.png",
         imageWidth: 76,
       },

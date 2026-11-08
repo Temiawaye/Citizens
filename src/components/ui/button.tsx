@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 import { ActivityIndicator, Platform, Pressable, Text } from "react-native";
+import { COLORS } from "@/lib/theme";
 
 type ButtonProps = PropsWithChildren<{
   onPress?: () => void;
@@ -27,7 +28,7 @@ export function Button({
       : variant === "danger"
         ? "bg-danger-600"
         : "border border-outline bg-surface";
-  const text = variant === "secondary" ? "text-slate-900" : "text-white";
+  const text = variant === "secondary" ? "text-ink" : "text-white";
   return (
     <Pressable
       accessibilityRole="button"
@@ -37,7 +38,7 @@ export function Button({
       android_ripple={
         unavailable
           ? undefined
-          : { color: variant === "secondary" ? "#e2e8f0" : "#ffffff33" }
+          : { color: variant === "secondary" ? COLORS.selected : "#FFFFFF33" }
       }
       disabled={unavailable}
       onPress={onPress}
@@ -50,7 +51,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator
           accessibilityLabel="Loading"
-          color={variant === "secondary" ? "#334155" : "#fff"}
+          color={variant === "secondary" ? COLORS.text : COLORS.surface}
         />
       ) : (
         <Text className={`text-center text-base font-semibold ${text}`}>

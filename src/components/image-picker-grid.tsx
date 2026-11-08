@@ -65,7 +65,7 @@ export function ImagePickerGrid({
               accessibilityLabel={`Remove photo ${index + 1}`}
               hitSlop={8}
               onPress={() => onChange(images.filter((item) => item !== uri))}
-              className="absolute -right-2 -top-2 h-11 w-11 items-center justify-center rounded-full bg-danger-600"
+              className="absolute -right-2 -top-2 h-11 w-11 items-center justify-center rounded-full bg-danger-600 active:opacity-70"
             >
               <Text className="text-xl font-bold text-white">×</Text>
             </Pressable>
@@ -78,7 +78,7 @@ export function ImagePickerGrid({
             accessibilityRole="button"
             accessibilityHint="Opens the camera"
             onPress={() => void add("camera")}
-            className="min-h-12 min-w-32 flex-1 items-center justify-center rounded-control border border-outline bg-surface px-3"
+            className="min-h-12 min-w-32 flex-1 items-center justify-center rounded-control border border-outline bg-surface px-3 active:bg-brand-50"
           >
             <Text className="text-center font-semibold text-ink">
               Take photo
@@ -88,7 +88,7 @@ export function ImagePickerGrid({
             accessibilityRole="button"
             accessibilityHint="Opens your photo library"
             onPress={() => void add("library")}
-            className="min-h-12 min-w-32 flex-1 items-center justify-center rounded-control border border-outline bg-surface px-3"
+            className="min-h-12 min-w-32 flex-1 items-center justify-center rounded-control border border-outline bg-surface px-3 active:bg-brand-50"
           >
             <Text className="text-center font-semibold text-ink">
               Choose photos

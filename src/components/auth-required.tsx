@@ -10,11 +10,11 @@ export function AuthRequired({ route }: { route: string }) {
   const setPendingRoute = useAuthStore((state) => state.setPendingRoute);
   if (session) return null;
   return (
-    <View className="flex-1 items-center justify-center gap-4 bg-slate-50 p-8">
-      <Text className="text-2xl font-bold text-slate-950">
+    <View className="flex-1 items-center justify-center gap-4 bg-canvas p-8">
+      <Text className="text-2xl font-bold text-heading">
         Sign in required
       </Text>
-      <Text className="text-center text-slate-600">
+      <Text className="text-center text-muted">
         Sign in to create and manage your reports.
       </Text>
       <Button

@@ -12,6 +12,7 @@ import {
 import { useIncidents } from "@/hooks/use-incidents";
 import { CATEGORIES } from "@/lib/constants";
 import type { IncidentCategory } from "@/types/database";
+import { COLORS } from "@/lib/theme";
 
 /** Renders the filterable, paginated public incident feed. */
 export default function FeedScreen() {
@@ -41,7 +42,7 @@ export default function FeedScreen() {
     </View>
   ) : feed.isFetchNextPageError ? (
     <Pressable onPress={retryMore} className="p-4">
-      <Text className="text-center text-red-600">
+      <Text className="text-center font-medium text-danger-600">
         Could not load more. Tap to retry.
       </Text>
     </Pressable>
@@ -49,14 +50,14 @@ export default function FeedScreen() {
     <View />
   );
   return (
-    <View className="flex-1 bg-slate-50">
+    <View className="flex-1 bg-canvas">
       {feed.newCount > 0 ? (
         <Pressable
           onPress={() => {
             feed.clearNewCount();
             void feed.refetch();
           }}
-          className="mx-4 mt-3 min-h-11 items-center justify-center rounded-full bg-brand-600"
+          className="mx-4 mt-3 min-h-11 items-center justify-center rounded-full bg-brand-600 active:bg-brand-700"
         >
           <Text className="font-semibold text-white">
             {feed.newCount} new {feed.newCount === 1 ? "report" : "reports"}
@@ -70,6 +71,8 @@ export default function FeedScreen() {
         contentContainerClassName="p-4 grow"
         refreshControl={
           <RefreshControl
+            colors={[COLORS.primary]}
+            tintColor={COLORS.primary}
             refreshing={feed.isRefetching}
             onRefresh={() => {
               feed.clearNewCount();

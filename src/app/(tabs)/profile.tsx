@@ -49,18 +49,18 @@ export default function ProfileScreen() {
     }
   };
   return (
-    <View className="flex-1 gap-6 bg-slate-50 p-5">
-      <View className="gap-2 rounded-2xl bg-white p-5">
-        <Text className="text-xl font-bold text-slate-950">
+    <View className="flex-1 gap-6 bg-canvas p-5">
+      <View className="gap-2 rounded-2xl border border-outline bg-surface p-5">
+        <Text className="text-xl font-bold text-heading">
           {session.user.user_metadata.full_name || "Citizen"}
         </Text>
-        <Text className="text-slate-600">{session.user.email}</Text>
+        <Text className="text-muted">{session.user.email}</Text>
       </View>
-      <View className="gap-3 rounded-2xl bg-white p-5">
-        <Text className="font-bold text-slate-950">
+      <View className="gap-3 rounded-2xl border border-outline bg-surface p-5">
+        <Text className="font-bold text-heading">
           New incident notifications
         </Text>
-        <Text className="text-slate-600">{notificationState}</Text>
+        <Text className="text-muted">{notificationState}</Text>
         <Button variant="secondary" onPress={() => void enable()}>
           Enable notifications
         </Button>

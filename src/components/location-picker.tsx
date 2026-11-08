@@ -2,6 +2,7 @@ import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Linking, Pressable, Text, View } from "react-native";
 import MapView, { Marker, type MapPressEvent } from "react-native-maps";
+import { COLORS } from "@/lib/theme";
 
 export interface SelectedLocation {
   latitude: number;
@@ -94,15 +95,17 @@ export function LocationPicker({
   return (
     <View className="gap-3">
       <View className="flex-row items-center justify-between">
-        <Text className="font-semibold text-slate-700">
+        <Text className="font-semibold text-ink">
           Public incident location
         </Text>
         <Pressable
           disabled={loading}
           onPress={() => void locate()}
-          className="min-h-11 justify-center px-3"
+          accessibilityRole="button"
+          accessibilityState={{ disabled: loading, busy: loading }}
+          className="min-h-11 justify-center rounded-control px-3 active:bg-brand-50 disabled:opacity-50"
         >
-          <Text className="font-semibold text-brand-600">
+          <Text className="font-semibold text-location">
             {loading ? "Locating…" : "Use my location"}
           </Text>
         </Pressable>
@@ -118,12 +121,13 @@ export function LocationPicker({
         {value ? (
           <Marker
             coordinate={value}
+            pinColor={COLORS.location}
             draggable
             onDragEnd={(event) => void select(event.nativeEvent.coordinate)}
           />
         ) : null}
       </MapView>
-      <Text className="text-sm text-slate-600">
+      <Text className="text-sm text-muted">
         {value
           ? value.address ||
             `${value.latitude.toFixed(5)}, ${value.longitude.toFixed(5)}`

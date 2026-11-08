@@ -26,6 +26,7 @@ import { queryClient } from "@/lib/query-client";
 import { submitIncident, updateIncident } from "@/lib/submission";
 import { incidentSchema, type IncidentFormValues } from "@/lib/validation";
 import { useAuth } from "@/hooks/use-auth";
+import { COLORS } from "@/lib/theme";
 
 const EMPTY_REPORT_VALUES = {
   title: "",
@@ -141,13 +142,13 @@ export default function ReportScreen() {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={90}
-      className="flex-1 bg-slate-50"
+      className="flex-1 bg-canvas"
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerClassName="gap-5 p-4 pb-12"
       >
-        <Text className="text-sm text-slate-600">
+        <Text className="text-sm text-muted">
           {editId
             ? "Update the report details and location below. Existing photos are preserved."
             : "Reports are posted immediately. Descriptions, photos, your display name, and coordinates are public."}
@@ -186,18 +187,20 @@ export default function ReportScreen() {
           name="category"
           render={({ field: { onChange, value } }) => (
             <View className="gap-2">
-              <Text className="font-semibold text-slate-700">Category</Text>
-              <View className="rounded-xl border border-slate-300 bg-white">
+              <Text className="font-semibold text-ink">Category</Text>
+              <View className="rounded-xl border border-outline bg-surface">
                 <Picker
                   selectedValue={value}
                   onValueChange={onChange}
-                  dropdownIconColor="#64748b"
+                  dropdownIconColor={COLORS.supporting}
+                  style={{ color: COLORS.text, backgroundColor: COLORS.surface }}
                 >
                   {CATEGORIES.map((category) => (
                     <Picker.Item
                       key={category}
                       label={category}
                       value={category}
+                      color={COLORS.text}
                     />
                   ))}
                 </Picker>
@@ -206,8 +209,8 @@ export default function ReportScreen() {
           )}
         />
         {editId ? (
-          <View className="gap-2 rounded-control border border-slate-200 bg-white p-4">
-            <Text className="font-semibold text-slate-700">Photos</Text>
+          <View className="gap-2 rounded-control border border-outline bg-surface p-4">
+            <Text className="font-semibold text-ink">Photos</Text>
             <Text className="text-sm text-muted">
               {existingPhotoCount
                 ? `${existingPhotoCount} existing ${existingPhotoCount === 1 ? "photo" : "photos"} will be preserved.`
@@ -254,7 +257,7 @@ export default function ReportScreen() {
                         }}
                       />
                       {errors.latitude || errors.longitude ? (
-                        <Text className="mt-2 text-red-600">
+                        <Text accessibilityRole="alert" className="mt-2 font-medium text-danger-600">
                           Choose an incident location.
                         </Text>
                       ) : null}
